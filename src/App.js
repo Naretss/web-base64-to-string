@@ -35,9 +35,13 @@ function App() {
         </div>
       )}
       <footer className="footer">
-        
+
         <p>Narets Ng</p>
-        <img src={logo} className='logo' alt="Logo" href="https://www.facebook.com/profile.php?id=100001005871414" />
+
+        <a href="https://www.facebook.com/profile.php?id=100001005871414">
+          <img src={logo} className='logo' alt="Logo" />
+        </a>
+
       </footer>
     </div>
   );
