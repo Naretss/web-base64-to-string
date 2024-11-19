@@ -1,9 +1,36 @@
 import React, { useState } from 'react';
 import './App.css';
-import logo from "./img/icons8-facebook-32.png"
+import logo from "./img/icons8-facebook-32.png";
+
 function App() {
   const [base64, setBase64] = useState('');
   const [string, setString] = useState('');
+
+  const formatXML = (xmlString) => {
+    const PADDING = "  "; // ใช้สำหรับเว้นวรรค
+    const reg = /(>)(<)(\/*)/g;
+    const xml = xmlString.replace(reg, "$1\n$2$3");
+    let formatted = "";
+    let pad = 0;
+
+    xml.split("\n").forEach((node) => {
+      let indent = 0;
+      if (node.match(/.+<\/\w[^>]*>$/)) {
+        indent = 0; // Node อยู่ในบรรทัดเดียว
+      } else if (node.match(/^<\/\w/)) {
+        if (pad !== 0) pad -= 1; // Node ปิด
+      } else if (node.match(/^<\w[^>]*[^\/]>.*$/)) {
+        indent = 1; // Node เปิด
+      } else {
+        indent = 0;
+      }
+
+      formatted += PADDING.repeat(pad) + node + "\n\n";
+      pad += indent;
+    });
+
+    return formatted.trim();
+  };
 
   const handleConvert = () => {
     try {
@@ -15,7 +42,8 @@ function App() {
         const jsonObject = JSON.parse(decodedString);
         formattedString = JSON.stringify(jsonObject, null, 2); // Format JSON with 2 spaces indentation
       } catch (e) {
-        // Not a JSON string, do nothing
+        // ถ้าไม่ใช่ JSON ให้จัด XML Format
+        formattedString = formatXML(decodedString);
       }
 
       setString(formattedString);
@@ -42,7 +70,7 @@ function App() {
       {string && (
         <div className="output-container">
           <h2>Decoded String</h2>
-          <textarea readOnly value={string} />
+          <pre>{string}</pre>
         </div>
       )}
       <footer className="footer">
