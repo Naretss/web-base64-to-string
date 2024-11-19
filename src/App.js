@@ -28,9 +28,11 @@ function App() {
     <div className="App">
       <h1>Base64 Decode</h1>
       <p>Decode Base64 string or use the Base64 to File tool for large files</p>
-      <div>
-        <input
-          type="text"
+      <div className="input-container">
+        <h2>Base64 Input</h2>
+
+        <textarea
+          id="base64-input"
           value={base64}
           onChange={(e) => setBase64(e.target.value)}
           placeholder="Enter Base64"
