@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
 import logo from "./img/icons8-facebook-32.png";
+import SyntaxHighlighter from "react-syntax-highlighter";
+import { atelierLakesideDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 function App() {
-  const [base64, setBase64] = useState('');
-  const [string, setString] = useState('');
+  const [base64, setBase64] = useState("");
+  const [string, setString] = useState("");
 
   const formatXML = (xmlString) => {
     const PADDING = "  "; // ใช้สำหรับเว้นวรรค
@@ -34,7 +36,7 @@ function App() {
 
   const handleConvert = () => {
     try {
-      const decodedString = new TextDecoder('utf-8').decode(Uint8Array.from(atob(base64), c => c.charCodeAt(0)));
+      const decodedString = base64ToUtf8(base64);
       let formattedString = decodedString;
 
       // Check if the decoded string is JSON
@@ -48,10 +50,19 @@ function App() {
 
       setString(formattedString);
     } catch (error) {
-      alert('Invalid Base64 string');
+      alert("Invalid Base64 string");
     }
   };
 
+  function base64ToUtf8(base64) {
+    const binaryString = atob(base64);
+    const bytes = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+    const decodedString = new TextDecoder("utf-8").decode(bytes);
+    return decodedString;
+  }
   return (
     <div className="App">
       <h1>Base64 Decode</h1>
@@ -70,13 +81,15 @@ function App() {
       {string && (
         <div className="output-container">
           <h2>Decoded String</h2>
-          <pre>{string}</pre>
+          <SyntaxHighlighter language="xml" style={atelierLakesideDark}>
+            {string}
+          </SyntaxHighlighter>
         </div>
       )}
       <footer className="footer">
         <p>Narets Ng</p>
         <a href="https://www.facebook.com/profile.php?id=100001005871414">
-          <img src={logo} className='logo' alt="Logo" />
+          <img src={logo} className="logo" alt="Logo" />
         </a>
       </footer>
     </div>
