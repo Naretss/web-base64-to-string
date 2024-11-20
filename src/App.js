@@ -45,7 +45,7 @@ function App() {
 
         <footer className="footer mt-16 p-4 text-center text-white">
           <div className="flex flex-col items-center space-y-2">
-            <div className="text-sm text-gray-500">Narets Ng</div>
+            <div className="text-sm text-gray-500">contributor</div>
             <a
               href="https://www.facebook.com/profile.php?id=100001005871414"
               className="flex items-center space-x-2"
