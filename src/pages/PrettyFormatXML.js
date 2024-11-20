@@ -13,8 +13,8 @@ function PrettyFormatXML() {
   };
 
   return (
-    <div className="text-left max-w-xl mx-auto p-4">
-      <h1 className="text-lg font-medium mb-4">Pretty Format JSON</h1>
+    <div className="flex flex-col items-center max-w-xl mx-auto p-4">
+      <h1 className="text-lg self-start font-medium mb-4">Pretty Format XML</h1>
       <InputField
         value={xml}
         onChange={(e) => setXml(e.target.value)}
