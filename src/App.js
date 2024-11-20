@@ -1,98 +1,88 @@
-import React, { useState } from "react";
-import "./App.css";
+import React from "react";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import Base64Decode from "./pages/Base64Decode";
+import PrettyFormatXML from "./pages/PrettyFormatXML";
+import PrettyFormatJSON from "./pages/PrettyFormatJSON";
 import logo from "./img/icons8-facebook-32.png";
-import SyntaxHighlighter from "react-syntax-highlighter";
-import { atelierLakesideDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 function App() {
-  const [base64, setBase64] = useState("");
-  const [string, setString] = useState("");
-
-  const formatXML = (xmlString) => {
-    const PADDING = "  "; // ใช้สำหรับเว้นวรรค
-    const reg = /(>)(<)(\/*)/g;
-    const xml = xmlString.replace(reg, "$1\n$2$3");
-    let formatted = "";
-    let pad = 0;
-
-    xml.split("\n").forEach((node) => {
-      let indent = 0;
-      if (node.match(/.+<\/\w[^>]*>$/)) {
-        indent = 0; // Node อยู่ในบรรทัดเดียว
-      } else if (node.match(/^<\/\w/)) {
-        if (pad !== 0) pad -= 1; // Node ปิด
-      } else if (node.match(/^<\w[^>]*[^\/]>.*$/)) {
-        indent = 1; // Node เปิด
-      } else {
-        indent = 0;
-      }
-
-      formatted += PADDING.repeat(pad) + node + "\n\n";
-      pad += indent;
-    });
-
-    return formatted.trim();
-  };
-
-  const handleConvert = () => {
-    try {
-      const decodedString = base64ToUtf8(base64);
-      let formattedString = decodedString;
-
-      // Check if the decoded string is JSON
-      try {
-        const jsonObject = JSON.parse(decodedString);
-        formattedString = JSON.stringify(jsonObject, null, 2); // Format JSON with 2 spaces indentation
-      } catch (e) {
-        // ถ้าไม่ใช่ JSON ให้จัด XML Format
-        formattedString = formatXML(decodedString);
-      }
-
-      setString(formattedString);
-    } catch (error) {
-      alert("Invalid Base64 string");
-    }
-  };
-
-  function base64ToUtf8(base64) {
-    const binaryString = atob(base64);
-    const bytes = new Uint8Array(binaryString.length);
-    for (let i = 0; i < binaryString.length; i++) {
-      bytes[i] = binaryString.charCodeAt(i);
-    }
-    const decodedString = new TextDecoder("utf-8").decode(bytes);
-    return decodedString;
-  }
   return (
-    <div className="App">
-      <h1>Base64 Decode</h1>
-      <p>Decode Base64 string or use the Base64 to File tool for large files</p>
-      <div className="input-container">
-        <h2>Base64 Input</h2>
-
-        <textarea
-          id="base64-input"
-          value={base64}
-          onChange={(e) => setBase64(e.target.value)}
-          placeholder="Enter Base64"
-        />
-      </div>
-      <button onClick={handleConvert}>Decode</button>
-      {string && (
-        <div className="output-container">
-          <h2>Decoded String</h2>
-          <SyntaxHighlighter language="xml" style={atelierLakesideDark}>
-            {string}
-          </SyntaxHighlighter>
+    <Router>
+      <div className="App text-center p-5 text-white bg-black min-h-screen">
+        <div className="text-3xl font-mono font-bold mb-1">
+          String Utilities
         </div>
-      )}
-      <footer className="footer">
-        <p>Narets Ng</p>
-        <a href="https://www.facebook.com/profile.php?id=100001005871414">
-          <img src={logo} className="logo" alt="Logo" />
-        </a>
-      </footer>
-    </div>
+        <div className="text-xs mb-2 font-extralight">
+          Encode / Decode / Format
+        </div>
+        <nav>
+          <ul className="flex justify-center space-x-4">
+            <li>
+              <Link to="/" className="text-blue-500 hover:text-blue-700">
+                Base64 Decode
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/pretty-xml"
+                className="text-blue-500 hover:text-blue-700"
+              >
+                Pretty Format XML
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/pretty-json"
+                className="text-blue-500 hover:text-blue-700"
+              >
+                Pretty Format JSON
+              </Link>
+            </li>
+          </ul>
+        </nav>
+        <div className="p-4">
+          <Routes>
+            <Route path="/" element={<Base64Decode />} />
+            <Route path="/pretty-xml" element={<PrettyFormatXML />} />
+            <Route path="/pretty-json" element={<PrettyFormatJSON />} />
+          </Routes>
+        </div>
+
+        <footer className="footer mt-16 p-4 text-center text-white">
+          <div className="flex flex-col items-center space-y-2">
+            <div className="text-sm text-gray-500">Contributors</div>
+            <div className="flex space-x-8">
+              <div className="flex flex-col items-center">
+                <a
+                  href="https://www.facebook.com/profile.php?id=100001005871414"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center space-x-2"
+                >
+                  <img src={logo} className="h-7 w-7 rounded-full" alt="Logo" />
+                </a>
+                <span className="text-xs">Narets Ng</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <a
+                  href="https://github.com/pisichi"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center space-x-2"
+                >
+                  <img
+                    src={`https://github.com/identicons/pisichi.png?size=10`}
+                    className="h-7 w-7 rounded-full"
+                    alt="Logo"
+                  />
+                </a>
+                <span className="text-xs">Win Pisi</span>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </Router>
   );
 }
 
