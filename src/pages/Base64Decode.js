@@ -31,19 +31,15 @@ function Base64Decode() {
   };
 
   return (
-    <div className="flex flex-col items-center max-w-xl mx-auto p-4">
+    <div className="flex flex-col items-center max-w-2xl mx-auto p-4">
       <h1 className="text-lg self-start font-medium mb-4">Base64 Decode</h1>
-      <InputField
-        value={base64}
-        onChange={(e) => setBase64(e.target.value)}
-        placeholder="Enter Base64"
-      />
-        <button
-          className="bg-blue-500 text-sm text-white py-1 px-2 rounded mt-4 hover:bg-blue-700"
-          onClick={handleConvert}
-        >
-          Decode
-        </button>
+      <InputField value={base64} onChange={(e) => setBase64(e.target.value)} placeholder="Enter Base64" />
+      <button
+        className="bg-blue-500 text-sm text-white py-1 px-2 rounded mt-4 hover:bg-blue-700"
+        onClick={handleConvert}
+      >
+        Decode
+      </button>
       {string && <OutputField string={string} />}
     </div>
   );

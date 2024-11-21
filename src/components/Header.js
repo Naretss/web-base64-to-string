@@ -12,7 +12,7 @@ const Header = () => {
   const [activePath, setActivePath] = useState(location.pathname);
 
   return (
-    <header>
+    <header className="text-center">
       <div className="text-3xl font-mono font-bold mb-1">String Utilities</div>
       <div className="text-xs mb-2 font-extralight">Encode / Decode / Format</div>
       <nav>

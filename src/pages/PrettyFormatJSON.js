@@ -16,7 +16,7 @@ function PrettyFormatJSON() {
   };
 
   return (
-    <div className="flex flex-col items-center max-w-xl mx-auto p-4">
+    <div className="flex flex-col items-center max-w-2xl mx-auto p-4">
       <h1 className="text-lg self-start font-medium mb-4">Pretty Format JSON</h1>
       <InputField value={json} onChange={(e) => setJson(e.target.value)} placeholder="Enter JSON" />
       <button
