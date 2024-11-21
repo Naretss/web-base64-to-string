@@ -8,6 +8,9 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Allows pushing to the repository
+      pages: write      # Allows deploying to GitHub Pages
 
     steps:
       # Step 1: Checkout the repository
