@@ -5,7 +5,7 @@ import MainPage from "./pages/MainPage";
 
 function App() {
   return (
-    <Router>
+    <Router basename="/web-base64-to-string">
       <Layout>
         <MainPage />
       </Layout>
