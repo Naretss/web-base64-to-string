@@ -4,17 +4,17 @@
   "private": true,
   "homepage": "https://naretss.github.io/web-base64-to-string",
   "dependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "gh-pages": "^6.2.0",
-    "prettier": "^3.3.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.28.0",
-    "react-scripts": "5.0.1",
-    "react-syntax-highlighter": "^15.6.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@uiw/react-codemirror": "^4.23.6",
+    "gh-pages": "^6.2.0",
+    "js-beautify": "^1.15.1",
+    "prettier": "^3.3.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -43,7 +43,10 @@
     ]
   },
   "devDependencies": {
+    "@codemirror/lang-json": "^6.0.1",
+    "@codemirror/lang-xml": "^6.1.0",
     "shx": "^0.3.4",
-    "tailwindcss": "^3.4.15"
+    "tailwindcss": "^3.4.15",
+    "react-scripts": "5.0.1"
   }
 }
