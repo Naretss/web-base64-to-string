@@ -2,23 +2,22 @@ import React, { useState } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { json } from "@codemirror/lang-json";
 import { xml } from "@codemirror/lang-xml";
-import beautify from "js-beautify"; // Import js-beautify
+import beautify from "js-beautify";
 
 function OutputField({ string }) {
-  // Beautify JSON or XML using js-beautify
   const beautifyJson = (str) => {
     try {
-      return beautify.js(JSON.stringify(JSON.parse(str)), { indent_size: 2 }); // Beautify JSON with 2-space indentation
+      return beautify.js(JSON.stringify(JSON.parse(str)), { indent_size: 2 }); // Beautify with 2-space indent
     } catch (e) {
-      return str; // Return original string if it's not valid JSON
+      return str;
     }
   };
 
   const beautifyXml = (str) => {
     try {
-      return beautify.html(str, { indent_size: 2 }); // Beautify XML with 2-space indentation
+      return beautify.html(str, { indent_size: 2 }); // Beautify XML with 2-space indent
     } catch (e) {
-      return str; // Return original string if it's not valid XML
+      return str;
     }
   };
 
@@ -32,11 +31,9 @@ function OutputField({ string }) {
   };
 
   const isXml = () => {
-    // Check if string starts with XML tags (basic check)
     return /^<\?xml/.test(string);
   };
 
-  // Beautify the string based on its type
   const beautifiedString = isJson() ? beautifyJson(string) : isXml() ? beautifyXml(string) : string;
 
   return (
@@ -44,16 +41,16 @@ function OutputField({ string }) {
       <div className="text-sm rounded-lg">
         {isJson() || isXml() ? (
           <CodeMirror
-            value={beautifiedString} // Pass the beautified string to CodeMirror
+            value={beautifiedString}
             height="auto"
             width="800px"
-            extensions={[isJson() ? json() : xml()]} // Use JSON or XML language mode
-            readOnly={true} // Make it read-only
-            theme="dark" // Optional theme
-            onChange={(value) => console.log("Content changed:", value)} // Handle content changes (if needed)
+            extensions={[isJson() ? json() : xml()]} 
+            readOnly={true}
+            theme="dark" 
+            onChange={(value) => console.log("Content changed:", value)}
           />
         ) : (
-          <pre>{string}</pre> // If it's neither JSON nor XML, show plain text
+          <pre>{string}</pre>
         )}
       </div>
     </div>
