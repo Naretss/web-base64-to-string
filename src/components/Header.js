@@ -9,7 +9,6 @@ const Header = () => {
   ];
 
   const location = useLocation();
-  const [activePath, setActivePath] = useState(location.pathname);
 
   return (
     <header className="text-center">
