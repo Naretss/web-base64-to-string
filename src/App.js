@@ -1,15 +1,22 @@
 import React from "react";
-import { BrowserRouter as Router } from "react-router-dom";
 import Layout from "./layouts/Default";
-import MainPage from "./pages/MainPage";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import Base64Decode from "./pages/Base64Decode";
+import PrettyFormatXML from "./pages/PrettyFormatXML";
+import PrettyFormatJSON from "./pages/PrettyFormatJSON";
 
 function App() {
   return (
-    <Router basename="/web-base64-to-string">
-      <Layout>
-        <MainPage />
-      </Layout>
-    </Router>
+    <BrowserRouter basename="/web-base64-to-string">
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Base64Decode />} />
+          <Route path="pretty-xml" element={<PrettyFormatXML />} />
+          <Route path="pretty-json" element={<PrettyFormatJSON />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

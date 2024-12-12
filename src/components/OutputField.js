@@ -35,7 +35,7 @@ function OutputField({ string, inputType }) {
     inputType === "JSON" ? beautifyJson(string) : inputType === "XML" ? beautifyXml(string) : string;
 
   return (
-    <div className="mt-8 rounded-md overflow-hidden">
+    <div className="mt-8 rounded-md max-h-screen overflow-y-auto w-full">
       <div className="text-sm rounded-lg">
         <CodeMirror
           value={beautifiedString}
