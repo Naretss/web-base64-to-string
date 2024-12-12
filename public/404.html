@@ -2,7 +2,6 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta http-equiv="refresh" content="0; URL=/" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
@@ -38,13 +37,14 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-    <script>
-      console.log("If you see 'Failed to load resource: the server responded with a status of 404', don't worry!");
-      console.log("This is due to routing being handled on the client side because of GitHub page limitation.");
-      console.log(
-        "To resolve this, I've implemented a workaround based on this solution (https://stackoverflow.com/a/69744845)"
-      );
-      console.log("Now, GitHub Pages redirects all requests to index.html");
+    <script type="text/javascript">
+      // Redirect all 404s to the index.html
+      var url = window.location.pathname;
+      if (url.includes("/web-base64-to-string/")) {
+        window.location.href = "/web-base64-to-string/";
+      } else {
+        window.location.href = "/";
+      }
     </script>
   </body>
 </html>
