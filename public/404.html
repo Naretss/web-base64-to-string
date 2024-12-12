@@ -1,14 +1,11 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
+    <meta name="description" content="Web site created using create-react-app" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
@@ -28,6 +25,7 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+
     <div id="root"></div>
     <!--
       This HTML file is a template.
@@ -39,5 +37,13 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script>
+      console.log("If you see 'Failed to load resource: the server responded with a status of 404', don't worry!");
+      console.log("This is due to routing being handled on the client side because of GitHub page limitation.");
+      console.log(
+        "To resolve this, I've implemented a workaround based on this solution (https://stackoverflow.com/a/69744845)"
+      );
+      console.log("Now, GitHub Pages redirects all requests to index.html");
+    </script>
   </body>
 </html>

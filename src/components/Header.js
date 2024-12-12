@@ -20,10 +20,9 @@ const Header = () => {
           {navLinks.map((link, index) => (
             <li key={index}>
               <Link
+                key={link.path}
                 to={link.path}
-                onClick={() => setActivePath(link.path)}
-                className={`text-blue-500 hover:text-blue-300 transition-all duration-100 ease-in-out 
-                  ${activePath === link.path ? "text-blue-200" : ""}`}
+                className={` hover:text-blue-300 transition-all duration-100 ease-in-out ${location.pathname === link.path ? "text-blue-200" : "text-blue-500"}`}
               >
                 {link.label}
               </Link>

@@ -31,24 +31,8 @@ function OutputField({ string, inputType }) {
     }
   };
 
-  // const isXml = () => {
-  //   // Check if string starts with XML tags (basic check)
-  //   return /^<\?xml/.test(string);
-  // };
-
-  // Beautify the string based on its type
-  // const beautifiedString = isJson()
-  //   ? beautifyJson(string)
-  //   : isXml()
-  //     ? beautifyXml(string)
-  //     : string;
-
   const beautifiedString =
-    inputType === "JSON"
-      ? beautifyJson(string)
-      : inputType === "XML"
-        ? beautifyXml(string)
-        : string;
+    inputType === "JSON" ? beautifyJson(string) : inputType === "XML" ? beautifyXml(string) : string;
 
   return (
     <div className="mt-8 rounded-md overflow-hidden">
