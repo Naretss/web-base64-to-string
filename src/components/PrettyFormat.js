@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import InputField from "../components/InputField";
 import OutputField from "../components/OutputField";
 import { useContext } from "react";
