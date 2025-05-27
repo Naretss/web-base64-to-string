@@ -2,13 +2,15 @@ import React from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { json } from "@codemirror/lang-json";
 import { xml } from "@codemirror/lang-xml";
+import { EditorView } from "@codemirror/view";
 import beautify from "js-beautify";
+import { searchKeymap, highlightSelectionMatches } from "@codemirror/search";
+import { keymap } from "@codemirror/view";
 
 function OutputField({ string, inputType }) {
-  // Beautify JSON or XML using js-beautify
   const beautifyJson = (str) => {
     try {
-      return beautify.js(JSON.stringify(JSON.parse(str)), { indent_size: 2 }); // Beautify with 2-space indent
+      return beautify.js(JSON.stringify(JSON.parse(str)), { indent_size: 2 });
     } catch (e) {
       return str;
     }
@@ -16,7 +18,7 @@ function OutputField({ string, inputType }) {
 
   const beautifyXml = (str) => {
     try {
-      return beautify.html(str, { indent_size: 2 }); // Beautify XML with 2-space indent
+      return beautify.html(str, { indent_size: 2 });
     } catch (e) {
       return str;
     }
@@ -32,19 +34,27 @@ function OutputField({ string, inputType }) {
   };
 
   const beautifiedString =
-    inputType === "JSON" ? beautifyJson(string) : inputType === "XML" ? beautifyXml(string) : string;
+    inputType === "JSON"
+      ? beautifyJson(string)
+      : inputType === "XML"
+        ? beautifyXml(string)
+        : string;
 
   return (
-    <div className="mt-8 rounded-md max-h-screen overflow-y-auto w-full">
-      <div className="text-sm rounded-lg">
+    <div className="mt-4 rounded-md w-full overflow-x-hidden">
+      <div className="text-sm rounded-lg break-words whitespace-pre-wrap">
         <CodeMirror
           value={beautifiedString}
           height="auto"
-          width="800px"
-          extensions={[isJson() ? json() : xml()]}
+          width="100%"
           readOnly={true}
           theme="dark"
-          onChange={(value) => console.log("Content changed:", value)}
+          extensions={[
+            isJson() ? json() : xml(),
+            EditorView.lineWrapping,
+            highlightSelectionMatches(),
+            keymap.of(searchKeymap),
+          ]}
         />
       </div>
     </div>

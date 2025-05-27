@@ -8,16 +8,16 @@ export const formatXML = (xmlString) => {
   xml.split("\n").forEach((node) => {
     let indent = 0;
     if (node.match(/.+<\/\w[^>]*>$/)) {
-      indent = 0; // Node อยู่ในบรรทัดเดียว
+      indent = 0;
     } else if (node.match(/^<\/\w/)) {
-      if (pad !== 0) pad -= 1; // Node ปิด
+      if (pad !== 0) pad -= 1; 
     } else if (node.match(/^<\w[^>]*[^/]>.*$/)) {
-      indent = 1; // Node เปิด
+      indent = 1;
     } else {
       indent = 0;
     }
 
-    formatted += PADDING.repeat(pad) + node + "\n\n";
+    formatted += PADDING.repeat(pad) + node + "\n";
     pad += indent;
   });
 

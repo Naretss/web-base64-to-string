@@ -3,7 +3,7 @@ import logo from "../img/icons8-facebook-32.png";
 
 const Footer = () => {
   return (
-    <footer className="footer mt-16 p-4 text-center text-white">
+    <footer className="footer text-center text-white">
       <div className="flex flex-col items-center space-y-2">
         <div className="text-sm text-gray-500">Contributors</div>
         <div className="flex space-x-8">

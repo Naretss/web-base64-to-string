@@ -2,8 +2,23 @@
   font-family: Arial, sans-serif;
   text-align: center;
   padding: 20px;
-  color: #fff; /* เปลี่ยนสีตัวอักษรเป็นสีขาวเพื่อให้อ่านง่าย */
+  color: #fff;
+  background-color: #000;
 }
-body {
-  background-color: #000; /* เปลี่ยนพื้นหลังเป็นสีดำ */
+
+.main {
+  overflow: auto;
+  height: calc(
+    100vh - 1000px
+  ); /* Adjust the height calculation based on your header and footer sizes */
+}
+
+.cm-content {
+  word-break: break-word !important;
+  white-space: pre-wrap !important;
+}
+
+.cm-line {
+  word-break: break-word !important;
+  white-space: pre-wrap !important;
 }

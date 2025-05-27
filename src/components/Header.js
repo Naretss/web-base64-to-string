@@ -11,7 +11,7 @@ const Header = () => {
   const location = useLocation();
 
   return (
-    <header className="text-center">
+    <header className="text-center pb-2">
       <div className="text-3xl font-mono font-bold mb-1">String Utilities</div>
       <div className="text-xs mb-2 font-extralight">Encode / Decode / Format</div>
       <nav>

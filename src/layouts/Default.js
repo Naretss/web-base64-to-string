@@ -5,9 +5,9 @@ import { Outlet } from "react-router-dom";
 
 const Default = () => {
   return (
-    <div className="App p-5 text-white bg-black min-h-screen">
+    <div className="flex flex-col min-h-screen bg-black text-white overflow-y-hidden">
       <Header />
-      <main className="p-4">
+      <main className="flex-1 p-4 overflow-y-auto">
         <Outlet />
       </main>
       <Footer />
