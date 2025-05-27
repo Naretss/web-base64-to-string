@@ -1,6 +1,6 @@
 import InputField from "../components/InputField";
 import OutputField from "../components/OutputField";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { IOContext } from "../context/IOContext";
 
 function PrettyFormat({
