@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 
 const Header = () => {
   const navLinks = [
-    { path: "/", label: "Base64 Decode" },
+    { path: "/", label: "Encode / Decode" },
     { path: "/pretty-xml", label: "Pretty Format XML" },
     { path: "/pretty-json", label: "Pretty Format JSON" },
   ];

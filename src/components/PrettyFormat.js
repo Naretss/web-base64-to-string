@@ -1,5 +1,5 @@
 import InputField from "../components/InputField";
-import OutputField from "../components/OutputField";
+import CodeMirrorField from "./CodeMirrorField";
 import { useContext } from "react";
 import { IOContext } from "../context/IOContext";
 
@@ -56,7 +56,7 @@ function PrettyFormat({
       </button>
       {output && (
         <div className="w-full mt-4">
-          <OutputField string={output} inputType={inputType} />
+          <CodeMirrorField string={output} inputType={inputType} />
         </div>
       )}
     </div>

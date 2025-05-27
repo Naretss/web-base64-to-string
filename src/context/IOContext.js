@@ -4,35 +4,37 @@ export const IOContext = createContext();
 
 export const IOProvider = ({ children }) => {
   const [data, setData] = useState({
-    base64: { input: "", output: "" },
+    base64: { input: "", output: "", inputFormat: "", outputFOrmat: "" },
     xml: { input: "", output: "", checkbox: true },
     json: { input: "", output: "" },
   });
 
-  const updateInput = (type, input) => {
+  const updateField = (type, field, value) => {
     setData((prev) => ({
       ...prev,
-      [type]: { ...prev[type], input },
+      [type]: { ...prev[type], [field]: value },
     }));
   };
 
-  const updateOutput = (type, output) => {
-    setData((prev) => ({
-      ...prev,
-      [type]: { ...prev[type], output },
-    }));
-  };
-
-  const updateCheckbox = (type, checkbox) => {
-    setData((prev) => ({
-      ...prev,
-      [type]: { ...prev[type], checkbox },
-    }));
-  };
+  const updateInput = (type, input) => updateField(type, "input", input);
+  const updateOutput = (type, output) => updateField(type, "output", output);
+  const updateCheckbox = (type, checkbox) =>
+    updateField(type, "checkbox", checkbox);
+  const updateInputFormat = (type, inputFormat) =>
+    updateField(type, "inputFormat", inputFormat);
+  const updateOutputFormat = (type, outputFormat) =>
+    updateField(type, "outputFormat", outputFormat);
 
   return (
     <IOContext.Provider
-      value={{ data, updateInput, updateOutput, updateCheckbox }}
+      value={{
+        data,
+        updateInput,
+        updateOutput,
+        updateCheckbox,
+        updateInputFormat,
+        updateOutputFormat,
+      }}
     >
       {children}
     </IOContext.Provider>

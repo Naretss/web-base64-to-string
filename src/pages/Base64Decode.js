@@ -1,5 +1,5 @@
 import React from "react";
-import PrettyFormat from "../components/PrettyFormat";
+import EncoderDecoder from "../components/EncoderDecoder";
 import { base64ToUtf8, formatXML } from "../utils/format";
 
 function formatBase64(base64, placeholder) {
@@ -9,7 +9,7 @@ function formatBase64(base64, placeholder) {
 
 function Base64Decode() {
   return (
-    <PrettyFormat
+    <EncoderDecoder
       formatFunction={formatBase64}
       placeholder="Enter Base64"
       title="Base64 Decode"
