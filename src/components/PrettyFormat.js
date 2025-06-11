@@ -10,7 +10,8 @@ function PrettyFormat({
   inputType,
   inputIndex,
 }) {
-  const { data, updateInput, updateOutput, updateCheckbox } = useContext(IOContext);
+  const { data, updateInput, updateOutput, updateCheckbox } =
+    useContext(IOContext);
   const input = data[inputIndex.toLowerCase()].input;
   const output = data[inputIndex.toLowerCase()].output;
   const checkbox = data[inputIndex.toLowerCase()].checkbox;
@@ -18,7 +19,6 @@ function PrettyFormat({
   const handleFormat = () => {
     try {
       const formatted = formatFunction(input, checkbox);
-      console.log(formatted)
       updateOutput(inputIndex.toLowerCase(), formatted);
     } catch (error) {
       alert("Invalid input string");
@@ -40,7 +40,9 @@ function PrettyFormat({
             id="checkbox"
             type="checkbox"
             checked={checkbox}
-            onChange={(e) => updateCheckbox(inputIndex.toLowerCase(), e.target.checked)}
+            onChange={(e) =>
+              updateCheckbox(inputIndex.toLowerCase(), e.target.checked)
+            }
             className="h-4 w-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
           />
           <label htmlFor="checkbox" className="text-sm text-gray-100">

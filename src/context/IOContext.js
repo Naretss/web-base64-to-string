@@ -4,7 +4,7 @@ export const IOContext = createContext();
 
 export const IOProvider = ({ children }) => {
   const [data, setData] = useState({
-    base64: { input: "", output: "", inputFormat: "", outputFOrmat: "" },
+    base64: { input: "", output: "", inputFormat: "Base64", outputFormat: "UTF-8" },
     xml: { input: "", output: "", checkbox: true },
     json: { input: "", output: "" },
   });

@@ -17,11 +17,12 @@ function CodeMirrorField({ string, inputType }) {
   };
 
   const beautifyXml = (str) => {
-    try {
-      return beautify.html(str, { indent_size: 2 });
-    } catch (e) {
-      return str;
-    }
+    return str;
+    // try {
+    //   return beautify.html(str, { indent_size: 2 });
+    // } catch (e) {
+    //   return str;
+    // }
   };
 
   const isJson = () => {
@@ -54,6 +55,7 @@ function CodeMirrorField({ string, inputType }) {
             EditorView.lineWrapping,
             highlightSelectionMatches(),
             keymap.of(searchKeymap),
+            EditorView.contentAttributes.of({ style: "white-space: pre;" }), // Preserve white space
           ]}
         />
       </div>

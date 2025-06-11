@@ -38,7 +38,7 @@ export const formatXML = (xmlString, decodeOriginalMessage) => {
     pad += indent;
   });
 
-  return formatted.trim();
+  return formatted;
 };
 
 export const base64ToUtf8 = (base64) => {
