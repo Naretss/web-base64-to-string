@@ -9,6 +9,7 @@ import PrettyFormatJSON from "./pages/PrettyFormatJSON";
 import { IOProvider } from "./context/IOContext";
 
 import './App.css';
+import AvararGen from "./pages/AvatarGen";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route index element={<Base64Decode />} />
             <Route path="pretty-xml" element={<PrettyFormatXML />} />
             <Route path="pretty-json" element={<PrettyFormatJSON />} />
+            <Route path="avatar-gen" element={<AvararGen />} />
           </Route>
         </Routes>
       </BrowserRouter>
