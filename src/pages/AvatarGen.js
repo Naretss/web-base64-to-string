@@ -17,7 +17,7 @@ function AvatarGen() {
     const result = await snapdom(el, { scale: 1 });
     const img = await result.toPng();
     document.body.appendChild(img);
-    await result.download({ format: "png", filename: "my-capture" });
+    await result.download({ format: "png", filename: "avatar" });
   };
 
   return (
