@@ -13,17 +13,12 @@ function AvatarGen() {
   const previewRef = useRef(null);
 
   const exportToPng = async () => {
-    const element = previewRef.current;
-    const canvas = await snapdom.toPng(element);
-    const link = document.createElement("a");
-    link.download = "avatar.png";
-    link.href = canvas;
-    link.click();
+    const el = previewRef.current;
+    const result = await snapdom(el, { scale: 1 });
+    const img = await result.toPng();
+    document.body.appendChild(img);
+    await result.download({ format: "png", filename: "my-capture" });
   };
-
-  
-
-
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
