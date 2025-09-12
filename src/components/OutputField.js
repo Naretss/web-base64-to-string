@@ -1,13 +1,20 @@
-import React from "react";
+import React from 'react';
+import CodeMirrorField from './CodeMirrorField';
+import Button from './Button';
 
-function OutputField({ string }) {
+const OutputField = ({ string, inputType }) => {
+  const handleCopy = () => {
+    navigator.clipboard.writeText(string);
+  };
+
   return (
-    <textarea
-      value={string}
-      readOnly
-      className="w-full h-24 p-2 border border-gray-300 rounded bg-zinc-700 text-white text-sm resize-y mt-4"
-    />
+    <div className="w-full min-h-[16rem] h-auto">
+      <CodeMirrorField string={string} editable={false} inputType={inputType} />
+      <div className="mt-4 flex justify-end">
+        <Button onClick={handleCopy} variant="tertiary">Copy to Clipboard</Button>
+      </div>
+    </div>
   );
-}
+};
 
 export default OutputField;

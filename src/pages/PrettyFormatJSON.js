@@ -1,19 +1,12 @@
 import React from "react";
-import PrettyFormat from "../components/PrettyFormat";
-
-function formatJSON(json) {
-  const jsonObject = JSON.parse(json);
-  return JSON.stringify(jsonObject, null, 2);
-}
+import PrettyFormatter from "../features/pretty-formatter/PrettyFormatter";
 
 function PrettyFormatJSON() {
   return (
-    <PrettyFormat
-      formatFunction={formatJSON}
-      placeholder="Enter JSON"
+    <PrettyFormatter
+      pageIndex="json"
       title="Pretty Format JSON"
-      inputType="JSON"
-      inputIndex="json"
+      formatter="json"
     />
   );
 }

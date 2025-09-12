@@ -3,28 +3,10 @@ import CodeMirror from "@uiw/react-codemirror";
 import { json } from "@codemirror/lang-json";
 import { xml } from "@codemirror/lang-xml";
 import { EditorView } from "@codemirror/view";
-import beautify from "js-beautify";
 import { searchKeymap, highlightSelectionMatches } from "@codemirror/search";
 import { keymap } from "@codemirror/view";
 
 function CodeMirrorField({ string, inputType }) {
-  const beautifyJson = (str) => {
-    try {
-      return beautify.js(JSON.stringify(JSON.parse(str)), { indent_size: 2 });
-    } catch (e) {
-      return str;
-    }
-  };
-
-  const beautifyXml = (str) => {
-    return str;
-    // try {
-    //   return beautify.html(str, { indent_size: 2 });
-    // } catch (e) {
-    //   return str;
-    // }
-  };
-
   const isJson = () => {
     try {
       JSON.parse(string);
@@ -34,28 +16,20 @@ function CodeMirrorField({ string, inputType }) {
     }
   };
 
-  const beautifiedString =
-    inputType === "JSON"
-      ? beautifyJson(string)
-      : inputType === "XML"
-        ? beautifyXml(string)
-        : string;
-
   return (
-    <div className="mt-4 rounded-md w-full overflow-x-hidden">
-      <div className="text-sm rounded-lg break-words whitespace-pre-wrap">
+    <div className="rounded-md w-full h-full overflow-auto">
+      <div className="text-sm rounded-lg break-words whitespace-pre-wrap h-full">
         <CodeMirror
-          value={beautifiedString}
-          height="auto"
+          value={string}
+          height="100%"
           width="100%"
           readOnly={true}
           theme="dark"
           extensions={[
-            isJson() ? json() : xml(),
+            inputType && inputType.toUpperCase() === "JSON" ? json() : xml(),
             EditorView.lineWrapping,
             highlightSelectionMatches(),
             keymap.of(searchKeymap),
-            EditorView.contentAttributes.of({ style: "white-space: pre;" }), // Preserve white space
           ]}
         />
       </div>

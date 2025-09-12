@@ -1,37 +1,22 @@
 import React from "react";
-import logo from "../img/icons8-facebook-32.png";
 
 const Footer = () => {
   return (
-    <footer className="footer text-center text-white">
-      <div className="flex flex-col items-center space-y-2">
-        <div className="text-sm text-gray-500">Contributors</div>
-        <div className="flex space-x-8">
-          <div className="flex flex-col items-center">
-            <a
-              href="https://www.facebook.com/profile.php?id=100001005871414"
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center space-x-2"
-            >
-              <img src={logo} className="h-7 w-7 rounded-full" alt="Logo" />
-            </a>
-            <span className="text-xs">Narets Ng</span>
+    <footer className="bg-base-200">
+      <div className="container mx-auto px-4 py-6">
+        <div className="flex items-center justify-between">
+          <div className="text-sm text-text-secondary">
+            &copy; {new Date().getFullYear()} DevTools. All Rights Reserved.
           </div>
-          <div className="flex flex-col items-center">
+          <div className="flex items-center space-x-4">
             <a
-              href="https://github.com/pisichi"
+              href="https://github.com/pisichi/web-base64-to-string"
               target="_blank"
               rel="noreferrer"
-              className="flex items-center space-x-2"
+              className="text-text-secondary hover:text-primary"
             >
-              <img
-                src={`https://github.com/identicons/pisichi.png?size=10`}
-                className="h-7 w-7 rounded-full"
-                alt="Logo"
-              />
+              GitHub
             </a>
-            <span className="text-xs">Win Pisi</span>
           </div>
         </div>
       </div>

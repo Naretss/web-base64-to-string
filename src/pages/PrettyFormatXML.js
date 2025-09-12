@@ -1,15 +1,12 @@
 import React from "react";
-import PrettyFormat from "../components/PrettyFormat";
-import { formatXML } from "../utils/format";
+import PrettyFormatter from "../features/pretty-formatter/PrettyFormatter";
 
 function PrettyFormatXML() {
   return (
-    <PrettyFormat
-      formatFunction={formatXML}
-      placeholder="Enter XML"
+    <PrettyFormatter
+      pageIndex="xml"
       title="Pretty Format XML"
-      inputType="XML"
-      inputIndex="xml"
+      formatter="xml"
     />
   );
 }
