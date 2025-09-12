@@ -1,6 +1,24 @@
 import { useState, useRef } from "react";
 import { snapdom } from "@zumer/snapdom";
-import Button from "../components/Button";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
 
 function AvatarGen() {
   const [name, setName] = useState("Lorem");
@@ -40,129 +58,137 @@ function AvatarGen() {
   };
 
   return (
-    <div className="bg-base-200 rounded-lg shadow-md p-6">
-      <h1 className="text-2xl font-bold text-text-primary mb-4">Avatar Generator</h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="md:col-span-1">
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-text-secondary">Name</label>
-              <input
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="md:col-span-1">
+        <Card>
+          <CardHeader>
+            <CardTitle>Avatar Generator</CardTitle>
+            <CardDescription>Customize your avatar</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="name">Name</Label>
+              <Input
+                id="name"
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="mt-1 p-2 border border-base-300 rounded w-full bg-base-100 text-text-primary"
               />
             </div>
-            <div>
-              <label className="block text-sm font-medium text-text-secondary">Role</label>
-              <input
+            <div className="space-y-2">
+              <Label htmlFor="role">Role</Label>
+              <Input
+                id="role"
                 type="text"
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
-                className="mt-1 p-2 border border-base-300 rounded w-full bg-base-100 text-text-primary"
               />
             </div>
-            <div>
-              <label className="block text-sm font-medium text-text-secondary">Font</label>
-              <select
-                value={font}
-                onChange={(e) => setFont(e.target.value)}
-                className="mt-1 p-2 border border-base-300 rounded w-full bg-base-100 text-text-primary"
-              >
-                <option value="sans-serif">Sans-serif</option>
-                <option value="serif">Serif</option>
-                <option value="monospace">Monospace</option>
-                <option value="cursive">Cursive</option>
-                <option value="fantasy">Fantasy</option>
-              </select>
+            <Separator />
+            <div className="space-y-2">
+              <Label htmlFor="font">Font</Label>
+              <Select value={font} onValueChange={setFont}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a font" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="sans-serif">Sans-serif</SelectItem>
+                  <SelectItem value="serif">Serif</SelectItem>
+                  <SelectItem value="monospace">Monospace</SelectItem>
+                  <SelectItem value="cursive">Cursive</SelectItem>
+                  <SelectItem value="fantasy">Fantasy</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-text-secondary">Font Weight</label>
-              <select
-                value={fontWeight}
-                onChange={(e) => setFontWeight(e.target.value)}
-                className="mt-1 p-2 border border-base-300 rounded w-full bg-base-100 text-text-primary"
-              >
-                <option value="normal">Normal</option>
-                <option value="bold">Bold</option>
-              </select>
+            <div className="space-y-2">
+              <Label htmlFor="font-weight">Font Weight</Label>
+              <Select value={fontWeight} onValueChange={setFontWeight}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a font weight" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="normal">Normal</SelectItem>
+                  <SelectItem value="bold">Bold</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-text-secondary">Text Align</label>
-              <select
-                value={textAlign}
-                onChange={(e) => setTextAlign(e.target.value)}
-                className="mt-1 p-2 border border-base-300 rounded w-full bg-base-100 text-text-primary"
-              >
-                <option value="left">Left</option>
-                <option value="center">Center</option>
-                <option value="right">Right</option>
-              </select>
+            <div className="space-y-2">
+              <Label htmlFor="text-align">Text Align</Label>
+              <Select value={textAlign} onValueChange={setTextAlign}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a text align" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="left">Left</SelectItem>
+                  <SelectItem value="center">Center</SelectItem>
+                  <SelectItem value="right">Right</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-text-secondary">Text Case</label>
-              <select
-                value={textCase}
-                onChange={(e) => setTextCase(e.target.value)}
-                className="mt-1 p-2 border border-base-300 rounded w-full bg-base-100 text-text-primary"
-              >
-                <option value="none">None</option>
-                <option value="uppercase">Uppercase</option>
-                <option value="lowercase">Lowercase</option>
-                <option value="capitalize">Capitalize</option>
-              </select>
+            <div className="space-y-2">
+              <Label htmlFor="text-case">Text Case</Label>
+              <Select value={textCase} onValueChange={setTextCase}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a text case" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">None</SelectItem>
+                  <SelectItem value="uppercase">Uppercase</SelectItem>
+                  <SelectItem value="lowercase">Lowercase</SelectItem>
+                  <SelectItem value="capitalize">Capitalize</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-text-secondary">Name Size (px)</label>
-              <input
+            <Separator />
+            <div className="space-y-2">
+              <Label htmlFor="name-size">Name Size (px)</Label>
+              <Input
+                id="name-size"
                 type="number"
                 value={nameSize}
                 onChange={(e) => setNameSize(Number(e.target.value))}
-                className="mt-1 p-2 border border-base-300 rounded w-full bg-base-100 text-text-primary"
               />
             </div>
-            <div>
-              <label className="block text-sm font-medium text-text-secondary">Role Size (px)</label>
-              <input
+            <div className="space-y-2">
+              <Label htmlFor="role-size">Role Size (px)</Label>
+              <Input
+                id="role-size"
                 type="number"
                 value={roleSize}
                 onChange={(e) => setRoleSize(Number(e.target.value))}
-                className="mt-1 p-2 border border-base-300 rounded w-full bg-base-100 text-text-primary"
               />
             </div>
-            <div>
-              <label className="block text-sm font-medium text-text-secondary">Text Color</label>
-              <input
+            <Separator />
+            <div className="space-y-2">
+              <Label htmlFor="text-color">Text Color</Label>
+              <Input
+                id="text-color"
                 type="color"
                 value={textColor}
                 onChange={(e) => setTextColor(e.target.value)}
-                className="mt-1 p-2 border border-base-300 rounded w-full bg-base-100 text-text-primary"
               />
             </div>
-            <div>
-              <label className="block text-sm font-medium text-text-secondary">Background Color</label>
-              <input
+            <div className="space-y-2">
+              <Label htmlFor="bg-color">Background Color</Label>
+              <Input
+                id="bg-color"
                 type="color"
                 value={bgColor}
                 onChange={(e) => setBgColor(e.target.value)}
-                className="mt-1 p-2 border border-base-300 rounded w-full bg-base-100 text-text-primary"
               />
             </div>
-            <div>
-              <label className="block text-sm font-medium text-text-secondary">Background Image</label>
-              <input
-                type="file"
-                onChange={handleBgImageChange}
-                className="mt-1 text-sm text-text-secondary"
-              />
+            <div className="space-y-2">
+              <Label htmlFor="bg-image">Background Image</Label>
+              <Input id="bg-image" type="file" onChange={handleBgImageChange} />
             </div>
-          </div>
-        </div>
-        <div className="md:col-span-2">
-          <div
+          </CardContent>
+        </Card>
+      </div>
+      <div className="md:col-span-2">
+        <Card>
+          <CardContent
             ref={previewRef}
-            className="flex items-center justify-center border border-base-300 rounded-lg"
+            className="flex items-center justify-center"
             style={{
               width: "100%",
               height: "500px",
@@ -178,23 +204,21 @@ function AvatarGen() {
             }}
           >
             <div className="text-center">
-              <h1
-                style={{ fontSize: `${nameSize}px`, lineHeight: `${nameSize}px` }}
-              >
+              <h1 style={{ fontSize: `${nameSize}px`, lineHeight: 1 }}>
                 {name}
               </h1>
-              <p
-                style={{ fontSize: `${roleSize}px`, lineHeight: `${roleSize}px` }}
-              >
+              <p style={{ fontSize: `${roleSize}px`, lineHeight: 1 }}>
                 {role}
               </p>
             </div>
-          </div>
-          <div className="mt-4 flex justify-end space-x-4">
-            <Button onClick={exportToPng} variant="primary">Export to PNG</Button>
-            <Button onClick={exportToJpg} variant="secondary">Export to JPG</Button>
-          </div>
-        </div>
+          </CardContent>
+          <CardFooter className="flex justify-end space-x-4">
+            <Button onClick={exportToPng}>Export to PNG</Button>
+            <Button onClick={exportToJpg} variant="secondary">
+              Export to JPG
+            </Button>
+          </CardFooter>
+        </Card>
       </div>
     </div>
   );

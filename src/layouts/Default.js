@@ -1,18 +1,21 @@
-import React from "react";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import { Outlet } from "react-router-dom";
+import { Header } from "../components/Header";
+import { SidebarNav } from "../components/SidebarNav";
 
 const Default = () => {
   return (
-    <div className="flex flex-col min-h-screen bg-base-100 text-text-primary">
+    <div className="flex min-h-screen flex-col">
       <Header />
-      <main className="flex-1">
-        <div className="container mx-auto px-4 py-8">
+      <div className="container flex-1 items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10">
+        <aside className="fixed top-14 z-30 -ml-2 hidden h-[calc(100vh-3.5rem)] w-full shrink-0 md:sticky md:block">
+          <div className="h-full py-6 pl-8 pr-6 lg:py-8">
+            <SidebarNav />
+          </div>
+        </aside>
+        <main className="flex-1 py-6">
           <Outlet />
-        </div>
-      </main>
-      <Footer />
+        </main>
+      </div>
     </div>
   );
 };

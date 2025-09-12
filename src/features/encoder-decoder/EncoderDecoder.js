@@ -1,21 +1,43 @@
-import { useContext, useState } from "react";
-import { IOContext } from "../../context/IOContext";
+import { useState, useContext } from "react";
 import { encodeData, decodeData } from "../../utils/convert";
-import { formats } from "../../config";
-import Button from "../../components/Button";
-import InputField from "../../components/InputField";
-import OutputField from "../../components/OutputField";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { IOContext } from "@/context/IOContext";
+
+const formats = ["UTF-8", "Hex", "Binary"];
 
 function EncoderDecoder({ pageIndex, title }) {
-  const { data, updateInput, updateOutput, updateInputFormat, updateOutputFormat } = useContext(IOContext);
-  const { input, output, inputFormat, outputFormat } = data[pageIndex.toLowerCase()];
+  const {
+    data,
+    updateInput,
+    updateOutput,
+    updateInputFormat,
+    updateOutputFormat,
+  } = useContext(IOContext);
+  const { input, output, inputFormat, outputFormat } = data[pageIndex];
   const [isLoading, setIsLoading] = useState(false);
 
   const handleEncode = () => {
     setIsLoading(true);
     try {
       const result = encodeData(input, outputFormat);
-      updateOutput(pageIndex.toLowerCase(), result);
+      updateOutput(pageIndex, result);
     } catch (e) {
       alert("Encoding failed: " + e.message);
     }
@@ -26,7 +48,7 @@ function EncoderDecoder({ pageIndex, title }) {
     setIsLoading(true);
     try {
       const result = decodeData(input, inputFormat);
-      updateOutput(pageIndex.toLowerCase(), result);
+      updateOutput(pageIndex, result);
     } catch (e) {
       alert("Decoding failed: " + e.message);
     }
@@ -34,8 +56,8 @@ function EncoderDecoder({ pageIndex, title }) {
   };
 
   const handleClear = () => {
-    updateInput(pageIndex.toLowerCase(), "");
-    updateOutput(pageIndex.toLowerCase(), "");
+    updateInput(pageIndex, "");
+    updateOutput(pageIndex, "");
   };
 
   const handleFileChange = (e) => {
@@ -43,70 +65,96 @@ function EncoderDecoder({ pageIndex, title }) {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        updateInput(pageIndex.toLowerCase(), e.target.result);
+        updateInput(pageIndex, e.target.result);
       };
       reader.readAsText(file);
     }
   };
 
   return (
-    <div className="bg-base-200 rounded-lg shadow-md p-6">
-      <h1 className="text-2xl font-bold text-text-primary mb-4">{title}</h1>
-      <div className="space-y-6">
-        <div>
-          <div className="flex justify-between items-center mb-2">
-            <label className="text-lg font-medium text-text-primary">Input</label>
-            <div className="flex items-center space-x-2">
-              <label className="text-sm text-text-secondary">Format:</label>
-              <select
-                value={inputFormat}
-                onChange={(e) => updateInputFormat(pageIndex.toLowerCase(), e.target.value)}
-                className="p-1 px-2 border border-base-300 rounded bg-base-100 text-text-primary text-xs"
-              >
-                {formats.map((fmt) => (
-                  <option key={fmt}>{fmt}</option>
-                ))}
-              </select>
+    <Card>
+      <CardHeader>
+        <CardTitle>{title}</CardTitle>
+        <CardDescription>Encode and decode data in various formats</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <div className="flex justify-between items-center">
+              <Label htmlFor="input">Input</Label>
+              <div className="flex items-center space-x-2">
+                <Label htmlFor="input-format" className="text-sm">
+                  Format:
+                </Label>
+                <Select
+                  value={inputFormat}
+                  onValueChange={(value) => updateInputFormat(pageIndex, value)}
+                >
+                  <SelectTrigger id="input-format" className="w-[100px]">
+                    <SelectValue placeholder="Select a format" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {formats.map((fmt) => (
+                      <SelectItem key={fmt} value={fmt}>
+                        {fmt}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <Textarea
+              id="input"
+              value={input}
+              onChange={(e) => updateInput(pageIndex, e.target.value)}
+              placeholder="Enter text or drop a file"
+              className="h-48"
+            />
+            <div className="flex items-center justify-between">
+              <input type="file" onChange={handleFileChange} className="text-sm" />
+              <Button onClick={handleClear} variant="ghost">
+                Clear
+              </Button>
             </div>
           </div>
-          <InputField
-            value={input}
-            onChange={(e) => updateInput(pageIndex.toLowerCase(), e.target.value)}
-            placeholder="Enter text or drop a file"
-          />
-          <div className="mt-4 flex items-center justify-between">
-            <input type="file" onChange={handleFileChange} className="text-sm text-text-secondary" />
-            <Button onClick={handleClear} variant="tertiary">Clear</Button>
+          <div className="space-y-2">
+            <div className="flex justify-between items-center">
+              <Label htmlFor="output">Output</Label>
+              <div className="flex items-center space-x-2">
+                <Label htmlFor="output-format" className="text-sm">
+                  Format:
+                </Label>
+                <Select
+                  value={outputFormat}
+                  onValueChange={(value) => updateOutputFormat(pageIndex, value)}
+                >
+                  <SelectTrigger id="output-format" className="w-[100px]">
+                    <SelectValue placeholder="Select a format" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {formats.map((fmt) => (
+                      <SelectItem key={fmt} value={fmt}>
+                        {fmt}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <Textarea id="output" value={output} readOnly className="h-48" />
           </div>
         </div>
+        <Separator />
         <div className="flex justify-center space-x-4">
-            <Button onClick={handleDecode} variant="primary" disabled={isLoading}>
+          <Button onClick={handleDecode} disabled={isLoading}>
             {isLoading ? "Decoding..." : "Decode"}
-            </Button>
-            <Button onClick={handleEncode} variant="secondary" disabled={isLoading}>
+          </Button>
+          <Button onClick={handleEncode} variant="secondary" disabled={isLoading}>
             {isLoading ? "Encoding..." : "Encode"}
-            </Button>
+          </Button>
         </div>
-        <div>
-          <div className="flex justify-between items-center mb-2">
-            <label className="text-lg font-medium text-text-primary">Output</label>
-            <div className="flex items-center space-x-2">
-              <label className="text-sm text-text-secondary">Format:</label>
-              <select
-                value={outputFormat}
-                onChange={(e) => updateOutputFormat(pageIndex.toLowerCase(), e.target.value)}
-                className="p-1 px-2 border border-base-300 rounded bg-base-100 text-text-primary text-xs"
-              >
-                {formats.map((fmt) => (
-                  <option key={fmt}>{fmt}</option>
-                ))}
-              </select>
-            </div>
-          </div>
-          <OutputField string={output} />
-        </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }
 

@@ -1,20 +1,32 @@
-import { useContext, useState } from "react";
-import { IOContext } from "../../context/IOContext";
+import { useState, useContext } from "react";
 import { format } from "../../utils/format";
-import Button from "../../components/Button";
-import InputField from "../../components/InputField";
-import OutputField from "../../components/OutputField";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import CodeMirrorField from "@/components/CodeMirrorField";
+import { Copy, ChevronDown, ChevronUp } from "lucide-react";
+import { IOContext } from "@/context/IOContext";
 
 function PrettyFormatter({ pageIndex, title, formatter }) {
   const { data, updateInput, updateOutput, updateCheckbox } = useContext(IOContext);
-  const { input, output, checkbox } = data[pageIndex.toLowerCase()];
+  const { input, output, checkbox } = data[pageIndex];
   const [isLoading, setIsLoading] = useState(false);
+  const [isOutputVisible, setIsOutputVisible] = useState(true);
 
   const handleFormat = () => {
     setIsLoading(true);
     try {
       const formatted = format(formatter, input, checkbox);
-      updateOutput(pageIndex.toLowerCase(), formatted);
+      updateOutput(pageIndex, formatted);
     } catch (error) {
       alert("Invalid input string");
     }
@@ -22,8 +34,8 @@ function PrettyFormatter({ pageIndex, title, formatter }) {
   };
 
   const handleClear = () => {
-    updateInput(pageIndex.toLowerCase(), "");
-    updateOutput(pageIndex.toLowerCase(), "");
+    updateInput(pageIndex, "");
+    updateOutput(pageIndex, "");
   };
 
   const handleFileChange = (e) => {
@@ -31,55 +43,85 @@ function PrettyFormatter({ pageIndex, title, formatter }) {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        updateInput(pageIndex.toLowerCase(), e.target.result);
+        updateInput(pageIndex, e.target.result);
       };
       reader.readAsText(file);
     }
   };
 
+  const handleCopy = () => {
+    navigator.clipboard.writeText(output);
+  };
+
   return (
-    <div className="bg-base-200 rounded-lg shadow-md p-6">
-      <h1 className="text-2xl font-bold text-text-primary mb-4">{title}</h1>
-      <div className="flex flex-col gap-6">
-        <div>
-          <label className="text-lg font-medium text-text-primary">Input</label>
-          <InputField
+    <Card>
+      <CardHeader>
+        <CardTitle>{title}</CardTitle>
+        <CardDescription>Format {formatter.toUpperCase()} data to be more readable</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div className="space-y-2">
+          <Label htmlFor="input">Input</Label>
+          <Textarea
+            id="input"
             value={input}
-            onChange={(e) => updateInput(pageIndex.toLowerCase(), e.target.value)}
+            onChange={(e) => updateInput(pageIndex, e.target.value)}
             placeholder={`Enter ${formatter.toUpperCase()} or drop a file`}
+            className="h-96"
           />
-          <div className="mt-4 flex items-center justify-between">
-            <input type="file" onChange={handleFileChange} className="text-sm text-text-secondary" />
-            <Button onClick={handleClear} variant="tertiary">
+          <div className="flex items-center justify-between">
+            <input type="file" onChange={handleFileChange} className="text-sm" />
+            <Button onClick={handleClear} variant="ghost">
               Clear
             </Button>
           </div>
           {pageIndex.toLowerCase() === "xml" && (
             <div className="flex items-center space-x-2 pt-2">
-              <input
+              <Checkbox
                 id="checkbox"
-                type="checkbox"
                 checked={checkbox}
-                onChange={(e) => updateCheckbox(pageIndex.toLowerCase(), e.target.checked)}
-                className="h-4 w-4 text-primary bg-base-100 border-base-300 rounded focus:ring-primary"
+                onCheckedChange={(checked) => updateCheckbox(pageIndex, checked)}
               />
-              <label htmlFor="checkbox" className="text-sm text-text-secondary">
+              <Label htmlFor="checkbox" className="text-sm">
                 Decode OrgMsg
-              </label>
+              </Label>
             </div>
           )}
         </div>
-        <div className="mt-6 flex justify-center">
-          <Button onClick={handleFormat} variant="primary" disabled={isLoading}>
+        <Separator />
+        <div className="flex justify-center">
+          <Button onClick={handleFormat} disabled={isLoading}>
             {isLoading ? "Formatting..." : "Format"}
           </Button>
         </div>
-        <div>
-          <label className="text-lg font-medium text-text-primary">Output</label>
-          <OutputField string={output} inputType={formatter} />
+        <div className="space-y-2">
+          <div className="flex justify-between items-center">
+            <Label htmlFor="output">Output</Label>
+            <div>
+              <Button onClick={handleCopy} variant="ghost" size="icon">
+                <Copy className="h-4 w-4" />
+              </Button>
+              <Button
+                onClick={() => setIsOutputVisible(!isOutputVisible)}
+                variant="ghost"
+                size="icon"
+              >
+                {isOutputVisible ? (
+                  <ChevronUp className="h-4 w-4" />
+                ) : (
+                  <ChevronDown className="h-4 w-4" />
+                )}
+              </Button>
+            </div>
+          </div>
+          {isOutputVisible && (
+            <div className="h-96">
+              <CodeMirrorField string={output} inputType={formatter} />
+            </div>
+          )}
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }
 
