@@ -21,14 +21,17 @@ function PrettyFormatter({ pageIndex, title, formatter }) {
   const { input, output, checkbox } = data[pageIndex];
   const [isLoading, setIsLoading] = useState(false);
   const [isOutputVisible, setIsOutputVisible] = useState(true);
+  const [error, setError] = useState(null);
 
   const handleFormat = () => {
     setIsLoading(true);
+    setError(null); // Clear previous errors
     try {
       const formatted = format(formatter, input, checkbox);
       updateOutput(pageIndex, formatted);
-    } catch (error) {
-      alert("Invalid input string");
+    } catch (e) {
+      setError(e.message); // Set the error message
+      updateOutput(pageIndex, ""); // Clear output on error
     }
     setIsLoading(false);
   };
@@ -36,6 +39,7 @@ function PrettyFormatter({ pageIndex, title, formatter }) {
   const handleClear = () => {
     updateInput(pageIndex, "");
     updateOutput(pageIndex, "");
+    setError(null); // Clear error on clear
   };
 
   const handleFileChange = (e) => {
@@ -44,6 +48,7 @@ function PrettyFormatter({ pageIndex, title, formatter }) {
       const reader = new FileReader();
       reader.onload = (e) => {
         updateInput(pageIndex, e.target.result);
+        setError(null); // Clear error on new file input
       };
       reader.readAsText(file);
     }
@@ -65,9 +70,12 @@ function PrettyFormatter({ pageIndex, title, formatter }) {
           <Textarea
             id="input"
             value={input}
-            onChange={(e) => updateInput(pageIndex, e.target.value)}
+            onChange={(e) => {
+              updateInput(pageIndex, e.target.value);
+              setError(null); // Clear error on input change
+            }}
             placeholder={`Enter ${formatter.toUpperCase()} or drop a file`}
-            className="h-96"
+            className="h-50"
           />
           <div className="flex items-center justify-between">
             <input type="file" onChange={handleFileChange} className="text-sm" />
@@ -114,6 +122,7 @@ function PrettyFormatter({ pageIndex, title, formatter }) {
               </Button>
             </div>
           </div>
+          {error && <p className="text-red-500 text-sm">Error: {error}</p>}
           {isOutputVisible && (
             <div className="h-96">
               <CodeMirrorField string={output} inputType={formatter} />

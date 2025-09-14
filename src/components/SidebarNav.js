@@ -6,6 +6,7 @@ const navLinks = [
     title: "Encoders / Decoders",
     links: [
       { path: "/", label: "Base64" },
+      // { path: "/iso8583-decoder", label: "ISO8583 Decoder" },
     ],
   },
   {
@@ -15,16 +16,19 @@ const navLinks = [
       { path: "/pretty-json", label: "JSON Formatter" },
     ],
   },
-  {
-    title: "Generators",
-    links: [
-        { path: "/avatar-gen", label: "Avatar Generator" },
-        { path: "/hash-generator", label: "Hash Generator" }
-    ],
-  },
+  // {
+  //   title: "Generators",
+  //   links: [
+  //       { path: "/avatar-gen", label: "Avatar Generator" },
+  //       { path: "/hash-generator", label: "Hash Generator" }
+  //   ],
+  // },
   {
     title: "Utilities",
-    links: [{ path: "/string-utils", label: "String Utilities" }],
+    links: [
+      { path: "/string-utils", label: "String Utilities" },
+      { path: "/string-compare", label: "String Compare" }
+    ],
   },
 ];
 

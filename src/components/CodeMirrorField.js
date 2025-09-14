@@ -31,6 +31,7 @@ function CodeMirrorField({ string, inputType }) {
             highlightSelectionMatches(),
             keymap.of(searchKeymap),
           ]}
+          style={{ backgroundColor: 'var(--input)' }} // Use the input color variable
         />
       </div>
     </div>

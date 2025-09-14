@@ -9,9 +9,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Separator } from "../components/ui/separator";
+import { toOneLine } from "@/utils/format";
 
 function StringUtils() {
   const [input, setInput] = useState("");
+  const [oneLineOutput, setOneLineOutput] = useState("");
 
   const charCount = input.length;
   const wordCount = input.trim().split(/\s+/).filter(Boolean).length;
@@ -19,6 +22,11 @@ function StringUtils() {
 
   const handleClear = () => {
     setInput("");
+    setOneLineOutput("");
+  };
+
+  const handleToOneLine = () => {
+    setOneLineOutput(toOneLine(input));
   };
 
   return (
@@ -50,9 +58,24 @@ function StringUtils() {
             </Button>
           </div>
         </div>
+
+        <Separator />
+
+        <div className="space-y-2">
+          <h3 className="text-lg font-semibold">String to One Line</h3>
+          <Textarea
+            id="one-line-output"
+            value={oneLineOutput}
+            readOnly
+            placeholder="One line output"
+            className="h-24"
+          />
+          <Button onClick={handleToOneLine}>Convert to One Line</Button>
+        </div>
       </CardContent>
     </Card>
   );
 }
+
 
 export default StringUtils;

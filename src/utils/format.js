@@ -2,8 +2,19 @@ import { base64ToUtf8 } from "./decode";
 import beautify from "js-beautify";
 
 const formatXML = (xmlString, decodeOriginalMessage) => {
+  // Basic XML validation
+  try {
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlString, "text/xml");
+    if (xmlDoc.getElementsByTagName("parsererror").length > 0) {
+      throw new Error("Invalid XML syntax");
+    }
+  } catch (e) {
+    throw new Error("Invalid XML syntax: " + e.message);
+  }
+
   const PADDING = "  ";
-  const reg = /(>)(<)(\/*)/g;
+  const reg = /(>)(<)(\/\*)/g;
   let xml = xmlString.replace(reg, "$1\n$2$3");
 
   if (decodeOriginalMessage) {
@@ -47,11 +58,8 @@ ${formattedDecoded}
 };
 
 const formatJSON = (jsonString) => {
-  try {
-    return beautify.js(JSON.stringify(JSON.parse(jsonString)), { indent_size: 2 });
-  } catch (e) {
-    return jsonString;
-  }
+  // This will throw an error if the JSON is invalid
+  return beautify.js(JSON.stringify(JSON.parse(jsonString)), { indent_size: 2 });
 };
 
 export const format = (formatter, string, checkbox) => {
@@ -64,3 +72,8 @@ export const format = (formatter, string, checkbox) => {
       return string;
   }
 };
+
+export const toOneLine = (inputString) => {
+  return inputString.replace(/\s+/g, " ").trim();
+};
+
