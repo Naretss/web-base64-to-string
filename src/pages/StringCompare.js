@@ -1,23 +1,23 @@
 import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
+import { Button } from "../components/ui/button";
+import { Textarea } from "../components/ui/textarea";
+import { Label } from "../components/ui/label";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "../components/ui/card";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import ReactDiffViewer from "react-diff-viewer";
-import { useTheme } from "@/components/ThemeProvider";
+} from "../components/ui/select";
+import ReactDiffViewer from "react-diff-viewer-continued";
+import { useTheme } from "../components/ThemeProvider";
 
 function StringCompare() {
   const [input1, setInput1] = useState("");

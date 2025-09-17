@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
+import { Button } from "../components/ui/button";
+import { Textarea } from "../components/ui/textarea";
+import { Label } from "../components/ui/label";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "../components/ui/card";
 import { Separator } from "../components/ui/separator";
-import { toOneLine } from "@/utils/format";
+import { toOneLine } from "../utils/format";
 
 function StringUtils() {
   const [input, setInput] = useState("");

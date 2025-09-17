@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
+import { Button } from "../components/ui/button";
+import { Textarea } from "../components/ui/textarea";
+import { Label } from "../components/ui/label";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
+} from "../components/ui/card";
+import { Input } from "../components/ui/input";
+import { Separator } from "../components/ui/separator";
 import { SHA1, SHA256, MD5 } from "crypto-js";
 
 function HashGenerator() {

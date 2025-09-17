@@ -1,24 +1,24 @@
 import { useState, useContext } from "react";
 import { encodeData, decodeData } from "../../utils/convert";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
+import { Button } from "../../components/ui/button";
+import { Textarea } from "../../components/ui/textarea";
+import { Label } from "../../components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "../../components/ui/select";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { IOContext } from "@/context/IOContext";
+} from "../../components/ui/card";
+import { Separator } from "../../components/ui/separator";
+import { IOContext } from "../../context/IOContext";
 
 const formats = ["UTF-8", "Hex", "Binary"];
 

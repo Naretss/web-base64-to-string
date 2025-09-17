@@ -1,20 +1,20 @@
 import { useState, useContext } from "react";
 import { format } from "../../utils/format";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from "../../components/ui/button";
+import { Textarea } from "../../components/ui/textarea";
+import { Label } from "../../components/ui/label";
+import { Checkbox } from "../../components/ui/checkbox";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import CodeMirrorField from "@/components/CodeMirrorField";
+} from "../../components/ui/card";
+import { Separator } from "../../components/ui/separator";
+import CodeMirrorField from "../../components/CodeMirrorField";
 import { Copy, ChevronDown, ChevronUp } from "lucide-react";
-import { IOContext } from "@/context/IOContext";
+import { IOContext } from "../../context/IOContext";
 
 function PrettyFormatter({ pageIndex, title, formatter }) {
   const { data, updateInput, updateOutput, updateCheckbox } = useContext(IOContext);
