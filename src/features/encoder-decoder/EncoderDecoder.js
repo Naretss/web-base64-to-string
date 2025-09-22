@@ -32,28 +32,28 @@ function EncoderDecoder({ pageIndex, title }) {
   } = useContext(IOContext);
   const { input, output, inputFormat, outputFormat } = data[pageIndex];
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleEncode = () => {
+  const withLoadingAndErrorHandling = (fn) => async () => {
     setIsLoading(true);
+    setError(null);
     try {
-      const result = encodeData(input, outputFormat);
-      updateOutput(pageIndex, result);
+      await fn();
     } catch (e) {
-      alert("Encoding failed: " + e.message);
+      setError(e.message);
     }
     setIsLoading(false);
   };
 
-  const handleDecode = () => {
-    setIsLoading(true);
-    try {
-      const result = decodeData(input, inputFormat);
-      updateOutput(pageIndex, result);
-    } catch (e) {
-      alert("Decoding failed: " + e.message);
-    }
-    setIsLoading(false);
-  };
+  const handleEncode = withLoadingAndErrorHandling(() => {
+    const result = encodeData(input, outputFormat);
+    updateOutput(pageIndex, result);
+  });
+
+  const handleDecode = withLoadingAndErrorHandling(() => {
+    const result = decodeData(input, inputFormat);
+    updateOutput(pageIndex, result);
+  });
 
   const handleClear = () => {
     updateInput(pageIndex, "");
@@ -153,6 +153,7 @@ function EncoderDecoder({ pageIndex, title }) {
             {isLoading ? "Encoding..." : "Encode"}
           </Button>
         </div>
+        {error && <p className="text-red-500 text-sm">{error}</p>}
       </CardContent>
     </Card>
   );

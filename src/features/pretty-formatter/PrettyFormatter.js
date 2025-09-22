@@ -23,18 +23,22 @@ function PrettyFormatter({ pageIndex, title, formatter }) {
   const [isOutputVisible, setIsOutputVisible] = useState(true);
   const [error, setError] = useState(null);
 
-  const handleFormat = () => {
+  const withLoadingAndErrorHandling = (fn) => async () => {
     setIsLoading(true);
-    setError(null); // Clear previous errors
+    setError(null);
     try {
-      const formatted = format(formatter, input, checkbox);
-      updateOutput(pageIndex, formatted);
+      await fn();
     } catch (e) {
-      setError(e.message); // Set the error message
-      updateOutput(pageIndex, ""); // Clear output on error
+      setError(e.message);
+      updateOutput(pageIndex, "");
     }
     setIsLoading(false);
   };
+
+  const handleFormat = withLoadingAndErrorHandling(() => {
+    const formatted = format(formatter, input, checkbox);
+    updateOutput(pageIndex, formatted);
+  });
 
   const handleClear = () => {
     updateInput(pageIndex, "");

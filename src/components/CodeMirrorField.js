@@ -7,14 +7,7 @@ import { searchKeymap, highlightSelectionMatches } from "@codemirror/search";
 import { keymap } from "@codemirror/view";
 
 function CodeMirrorField({ string, inputType }) {
-  const isJson = () => {
-    try {
-      JSON.parse(string);
-      return true;
-    } catch (e) {
-      return false;
-    }
-  };
+  
 
   return (
     <div className="rounded-md w-full h-full overflow-auto">

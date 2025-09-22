@@ -19,31 +19,46 @@ import {
   SelectValue,
 } from "../components/ui/select";
 import { Separator } from "../components/ui/separator";
+import "./AvatarGen.css";
 
 function AvatarGen() {
-  const [name, setName] = useState("Lorem");
-  const [role, setRole] = useState("Software Engineer");
-  const [font, setFont] = useState("sans-serif");
-  const [fontWeight, setFontWeight] = useState("normal");
-  const [textAlign, setTextAlign] = useState("center");
-  const [textCase, setTextCase] = useState("none");
-  const [nameSize, setNameSize] = useState(100); // px
-  const [roleSize, setRoleSize] = useState(30); // px
-  const [textColor, setTextColor] = useState("#ffffff");
-  const [bgColor, setBgColor] = useState("#000000");
-  const [bgImage, setBgImage] = useState(null);
+  const [avatarConfig, setAvatarConfig] = useState({
+    name: "Lorem",
+    role: "Software Engineer",
+    font: "sans-serif",
+    fontWeight: "normal",
+    textAlign: "center",
+    textCase: "none",
+    nameSize: 100,
+    roleSize: 30,
+    textColor: "#ffffff",
+    bgColor: "#000000",
+    bgImage: null,
+  });
   const previewRef = useRef(null);
 
-  const exportToPng = async () => {
-    const el = previewRef.current;
-    const result = await snapdom(el, { scale: 1 });
-    await result.download({ format: "png", filename: "avatar" });
+  const handleConfigChange = (field, value) => {
+    setAvatarConfig((prevConfig) => ({ ...prevConfig, [field]: value }));
   };
 
-  const exportToJpg = async () => {
+  const {
+    name,
+    role,
+    font,
+    fontWeight,
+    textAlign,
+    textCase,
+    nameSize,
+    roleSize,
+    textColor,
+    bgColor,
+    bgImage,
+  } = avatarConfig;
+
+  const exportAvatar = async (format) => {
     const el = previewRef.current;
     const result = await snapdom(el, { scale: 1 });
-    await result.download({ format: "jpeg", filename: "avatar" });
+    await result.download({ format, filename: "avatar" });
   };
 
   const handleBgImageChange = (e) => {
@@ -51,7 +66,7 @@ function AvatarGen() {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        setBgImage(e.target.result);
+        handleConfigChange('bgImage', e.target.result);
       };
       reader.readAsDataURL(file);
     }
@@ -72,7 +87,7 @@ function AvatarGen() {
                 id="name"
                 type="text"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => handleConfigChange('name', e.target.value)}
               />
             </div>
             <div className="space-y-2">
@@ -81,13 +96,13 @@ function AvatarGen() {
                 id="role"
                 type="text"
                 value={role}
-                onChange={(e) => setRole(e.target.value)}
+                onChange={(e) => handleConfigChange('role', e.target.value)}
               />
             </div>
             <Separator />
             <div className="space-y-2">
               <Label htmlFor="font">Font</Label>
-              <Select value={font} onValueChange={setFont}>
+              <Select value={font} onValueChange={(value) => handleConfigChange('font', value)}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select a font" />
                 </SelectTrigger>
@@ -102,7 +117,7 @@ function AvatarGen() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="font-weight">Font Weight</Label>
-              <Select value={fontWeight} onValueChange={setFontWeight}>
+              <Select value={fontWeight} onValueChange={(value) => handleConfigChange('fontWeight', value)}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select a font weight" />
                 </SelectTrigger>
@@ -114,7 +129,7 @@ function AvatarGen() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="text-align">Text Align</Label>
-              <Select value={textAlign} onValueChange={setTextAlign}>
+              <Select value={textAlign} onValueChange={(value) => handleConfigChange('textAlign', value)}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select a text align" />
                 </SelectTrigger>
@@ -127,7 +142,7 @@ function AvatarGen() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="text-case">Text Case</Label>
-              <Select value={textCase} onValueChange={setTextCase}>
+              <Select value={textCase} onValueChange={(value) => handleConfigChange('textCase', value)}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select a text case" />
                 </SelectTrigger>
@@ -146,7 +161,7 @@ function AvatarGen() {
                 id="name-size"
                 type="number"
                 value={nameSize}
-                onChange={(e) => setNameSize(Number(e.target.value))}
+                onChange={(e) => handleConfigChange('nameSize', Number(e.target.value))}
               />
             </div>
             <div className="space-y-2">
@@ -155,7 +170,7 @@ function AvatarGen() {
                 id="role-size"
                 type="number"
                 value={roleSize}
-                onChange={(e) => setRoleSize(Number(e.target.value))}
+                onChange={(e) => handleConfigChange('roleSize', Number(e.target.value))}
               />
             </div>
             <Separator />
@@ -165,7 +180,7 @@ function AvatarGen() {
                 id="text-color"
                 type="color"
                 value={textColor}
-                onChange={(e) => setTextColor(e.target.value)}
+                onChange={(e) => handleConfigChange('textColor', e.target.value)}
               />
             </div>
             <div className="space-y-2">
@@ -174,7 +189,7 @@ function AvatarGen() {
                 id="bg-color"
                 type="color"
                 value={bgColor}
-                onChange={(e) => setBgColor(e.target.value)}
+                onChange={(e) => handleConfigChange('bgColor', e.target.value)}
               />
             </div>
             <div className="space-y-2">
@@ -188,10 +203,8 @@ function AvatarGen() {
         <Card>
           <CardContent
             ref={previewRef}
-            className="flex items-center justify-center"
+            className="flex items-center justify-center avatar-preview"
             style={{
-              width: "100%",
-              height: "500px",
               backgroundColor: bgColor,
               color: textColor,
               fontFamily: font,
@@ -199,8 +212,6 @@ function AvatarGen() {
               textAlign: textAlign,
               textTransform: textCase,
               backgroundImage: `url(${bgImage})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
             }}
           >
             <div className="text-center">
@@ -213,8 +224,8 @@ function AvatarGen() {
             </div>
           </CardContent>
           <CardFooter className="flex justify-end space-x-4">
-            <Button onClick={exportToPng}>Export to PNG</Button>
-            <Button onClick={exportToJpg} variant="secondary">
+            <Button onClick={() => exportAvatar("png")}>Export to PNG</Button>
+            <Button onClick={() => exportAvatar("jpeg")} variant="secondary">
               Export to JPG
             </Button>
           </CardFooter>

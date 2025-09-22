@@ -27,8 +27,13 @@ function StringCompare() {
   const [error, setError] = useState(null);
   const { theme } = useTheme();
 
-  const isDarkMode = theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
-  const compareMethod = compareType === "string" ? "diffChars" : "diffLines";
+  const isDarkMode = React.useMemo(() => {
+    return theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+  }, [theme]);
+
+  const compareMethod = React.useMemo(() => {
+    return compareType === "string" ? "diffChars" : "diffLines";
+  }, [compareType]);
 
   const handleCompare = () => {
     setError(null);

@@ -32,6 +32,10 @@ function hexToAscii(hex) {
 }
 
 export function decodeISO8583(hex) {
+  if (!/^[0-9A-Fa-f]*$/.test(hex) || hex.length % 2 !== 0) {
+    throw new Error("Invalid hex string. Must contain only hex characters and have an even length.");
+  }
+
   let offset = 0;
   const decoded = {};
 
