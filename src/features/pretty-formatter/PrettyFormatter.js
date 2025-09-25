@@ -11,7 +11,6 @@ import {
   CardHeader,
   CardTitle,
 } from "../../components/ui/card";
-import { Separator } from "../../components/ui/separator";
 import CodeMirrorField from "../../components/CodeMirrorField";
 import { Copy, ChevronDown, ChevronUp } from "lucide-react";
 import { IOContext } from "../../context/IOContext";
