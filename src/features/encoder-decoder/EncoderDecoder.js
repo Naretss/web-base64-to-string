@@ -60,17 +60,6 @@ function EncoderDecoder({ pageIndex, title }) {
     updateOutput(pageIndex, "");
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        updateInput(pageIndex, e.target.result);
-      };
-      reader.readAsText(file);
-    }
-  };
-
   return (
     <Card>
       <CardHeader>
@@ -107,11 +96,10 @@ function EncoderDecoder({ pageIndex, title }) {
               id="input"
               value={input}
               onChange={(e) => updateInput(pageIndex, e.target.value)}
-              placeholder="Enter text or drop a file"
+              placeholder="Enter text"
               className="h-48"
             />
-            <div className="flex items-center justify-between">
-              <input type="file" onChange={handleFileChange} className="text-sm" />
+            <div className="flex items-center justify-end">
               <Button onClick={handleClear} variant="ghost">
                 Clear
               </Button>

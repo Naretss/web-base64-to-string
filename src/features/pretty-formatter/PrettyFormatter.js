@@ -46,18 +46,6 @@ function PrettyFormatter({ pageIndex, title, formatter }) {
     setError(null); // Clear error on clear
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        updateInput(pageIndex, e.target.result);
-        setError(null); // Clear error on new file input
-      };
-      reader.readAsText(file);
-    }
-  };
-
   const handleCopy = () => {
     navigator.clipboard.writeText(output);
   };
@@ -68,7 +56,7 @@ function PrettyFormatter({ pageIndex, title, formatter }) {
         <CardTitle>{title}</CardTitle>
         <CardDescription>Format {formatter.toUpperCase()} data to be more readable</CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-2">
         <div className="space-y-2">
           <Label htmlFor="input">Input</Label>
           <Textarea
@@ -78,15 +66,9 @@ function PrettyFormatter({ pageIndex, title, formatter }) {
               updateInput(pageIndex, e.target.value);
               setError(null); // Clear error on input change
             }}
-            placeholder={`Enter ${formatter.toUpperCase()} or drop a file`}
+            placeholder={`Enter ${formatter.toUpperCase()} data`}
             className="h-50"
           />
-          <div className="flex items-center justify-between">
-            <input type="file" onChange={handleFileChange} className="text-sm" />
-            <Button onClick={handleClear} variant="ghost">
-              Clear
-            </Button>
-          </div>
           {pageIndex.toLowerCase() === "xml" && (
             <div className="flex items-center space-x-2 pt-2">
               <Checkbox
@@ -100,10 +82,12 @@ function PrettyFormatter({ pageIndex, title, formatter }) {
             </div>
           )}
         </div>
-        <Separator />
-        <div className="flex justify-center">
+        <div className="flex justify-center space-x-2">
           <Button onClick={handleFormat} disabled={isLoading}>
             {isLoading ? "Formatting..." : "Format"}
+          </Button>
+          <Button onClick={handleClear} variant="ghost">
+            Clear
           </Button>
         </div>
         <div className="space-y-2">

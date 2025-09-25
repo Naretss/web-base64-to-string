@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { Header } from "../components/Header";
 import { SidebarNav } from "../components/SidebarNav";
+import Footer from "../components/Footer";
 
 const Default = () => {
   return (
@@ -16,6 +17,7 @@ const Default = () => {
           <Outlet />
         </main>
       </div>
+      <Footer />
     </div>
   );
 };

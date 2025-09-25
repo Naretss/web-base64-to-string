@@ -25,7 +25,7 @@ export function Header() {
               />
             </svg>
             <span className="hidden font-bold sm:inline-block">
-              DevTools
+              ISO Dev Tools
             </span>
           </Link>
         </div>

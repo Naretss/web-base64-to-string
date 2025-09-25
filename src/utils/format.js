@@ -13,53 +13,30 @@ const formatXML = (xmlString, decodeOriginalMessage) => {
     throw new Error("Invalid XML syntax: " + e.message);
   }
 
-  const PADDING = "  ";
-  const reg = /(>)(<)(\/\*)/g;
-  let xml = xmlString.replace(reg, "$1\n$2$3");
+  let xml = xmlString;
 
   if (decodeOriginalMessage) {
-    xml = xml.replace(
-      /<([^>]*OrgMsg[^>]*)>([^<]+)<\/\1>/g,
-      (match, tagName, base64Content) => {
-        try {
-          const decoded = base64ToUtf8(base64Content);
-          const formattedDecoded = formatXML(decoded, decodeOriginalMessage); // recursive formatting
-          return `<${tagName}>
+    xml = xml.replace(/<([^>]*OrgMsg[^>]*)>([^<]+)<\/\1>/g, (match, tagName, base64Content) => {
+      try {
+        const decoded = base64ToUtf8(base64Content);
+        const formattedDecoded = formatXML(decoded, decodeOriginalMessage); // recursive formatting
+        return `<${tagName}>
 ${formattedDecoded}
 </${tagName}>`;
-        } catch (e) {
-          console.warn("Failed to decode base64 content:", e);
-          return match;
-        }
+      } catch (e) {
+        console.warn("Failed to decode base64 content:", e);
+        return match;
       }
-    );
+    });
   }
 
-  let formatted = "";
-  let pad = 0;
-
-  xml.split("\n").forEach((node) => {
-    let indent = 0;
-    if (node.match(/.+<\/\w[^>]*>$/)) {
-      indent = 0;
-    } else if (node.match(/^<\/\w/)) {
-      if (pad !== 0) pad -= 1;
-    } else if (node.match(/^<\w[^>]*[^/]>.*$/)) {
-      indent = 1;
-    } else {
-      indent = 0;
-    }
-
-    formatted += PADDING.repeat(pad) + node + "\n";
-    pad += indent;
-  });
-
-  return formatted;
+  return beautify.html(xml, { indent_size: 2 });
 };
 
 const formatJSON = (jsonString) => {
   // This will throw an error if the JSON is invalid
-  return beautify.js(JSON.stringify(JSON.parse(jsonString)), { indent_size: 2 });
+  const parsed = JSON.parse(jsonString);
+  return JSON.stringify(parsed, null, 2);
 };
 
 export const format = (formatter, string, checkbox) => {
@@ -76,4 +53,3 @@ export const format = (formatter, string, checkbox) => {
 export const toOneLine = (inputString) => {
   return inputString.replace(/\s+/g, " ").trim();
 };
-
